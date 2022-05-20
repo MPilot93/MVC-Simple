@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using CrudImpiegati.Repository;
 using CrudImpiegati.Models;
 
-namespace CRUDImpiegati.Controllers
+namespace CrudImpiegati.Controllers
 {
     public class HomeController : Controller
     {
@@ -27,6 +27,20 @@ namespace CRUDImpiegati.Controllers
             return View(result);
         }
 
+
+        [HttpGet]
+        public IActionResult Aggiungi()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Aggiungi(ImpiegatoViewModel impiegato)
+        {
+            dBManager.AggiungiImpiegato(impiegato);
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult Modifica(int id)
         {
@@ -45,18 +59,35 @@ namespace CRUDImpiegati.Controllers
         }
 
         [HttpGet]
-        public IActionResult Aggiungi()
+        public IActionResult Dettagli(int id)
         {
-            return View();
+            var impiegato = dBManager.GetAllImpiegati().Where(x => x.ID == id).FirstOrDefault();
+            return View(impiegato);
         }
 
         [HttpPost]
-        public IActionResult Aggiungi(ImpiegatoViewModel impiegato)
+        public IActionResult Dettagli(ImpiegatoViewModel impiegato)
         {
-            dBManager.AggiungiImpiegato(impiegato);
-            return RedirectToAction("Index");
+            var res = dBManager.GetAllImpiegati().Where(x => x.ID == impiegato.ID).FirstOrDefault();
+            
+               
+
+            return RedirectToAction("Dettagli");
         }
 
+
+        [HttpGet]
+        public IActionResult Cancella(int id)
+        {
+
+            var impiegato = dBManager.GetAllImpiegati().Where(x => x.ID == id).FirstOrDefault();
+            dBManager.CancellaImpiegato(impiegato);
+
+            return RedirectToAction("Index");
+
+        }
+
+    
         public IActionResult Privacy()
         {
             return View();

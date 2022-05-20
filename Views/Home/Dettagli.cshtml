@@ -1,0 +1,38 @@
+﻿@model ImpiegatoViewModel;
+
+@{
+    ViewData["Title"] = "Dettagli Impiegato";
+}
+
+<h1 class="display-4">Dettaglio impiegato</h1>
+
+<table class=" table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model=>model.Nome)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Cognome)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Salario)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Citta)
+            </th>
+        </tr>
+  
+    
+        <tr>
+                <td>@Html.DisplayFor(model=>model.Nome)</td>
+                <td>@Html.DisplayFor(model=>model.Cognome)</td>
+                <td>@Html.DisplayFor(model=>model.Salario)</td>
+                <td>@Html.DisplayFor(model=>model.Citta)</td>
+                
+        </tr>
+
+       <div>
+             @Html.ActionLink("Indietro","Index")
+       </div>
+    
+

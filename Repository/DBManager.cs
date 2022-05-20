@@ -53,6 +53,20 @@ namespace CrudImpiegati.Repository
             return command.ExecuteNonQuery();
         }
 
+        public int CancellaImpiegato(ImpiegatoViewModel impiegato)
+        {
+
+            string sql = @"delete from [Impiegati].[dbo].[Impiegato] 
+                        where ID=@id";
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
+            using var command = new SqlCommand(sql, connection);
+          
+            command.Parameters.AddWithValue("@id", impiegato.ID);
+
+            return command.ExecuteNonQuery();
+        }
+
         public int AggiungiImpiegato(ImpiegatoViewModel impiegato)
         {
             string sql = @"insert into [Impiegati].[dbo].[Impiegato] 
