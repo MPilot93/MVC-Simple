@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ImpiegatoViewModel>
+
+@{
+    ViewData["Title"] = "Lista Impiegati";
+}
+
+
+    <h1 class="display-4">Lista degli impiegati</h1>
+    <table class=" table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model=>model.Nome)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Cognome)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Salario)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model=>model.Citta)
+            </th>
+        </tr>
+    @if (Model!=null && Model.Any())
+    {
+        foreach(var impiegato in Model)
+        {
+            <tr>
+                <td>@impiegato.Nome)</td>
+                <td>@impiegato.Cognome)</td>
+                <td>@impiegato.Salario)</td>
+                <td>@impiegato.Citta)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new{ ID=impiegato.ID}) |
+                    @Html.ActionLink("Details", "Details", new{ ID=impiegato.ID}) |
+                    @Html.ActionLink("Delete", "Delete", new{ ID=impiegato.ID})
+                </td>
+            </tr>
+        }
+    }
+
+    else
+    {
+        <td colspan=5 class=" text-center">Nessun impiegato trovato</td>
+    }
+</table>
+
+    
