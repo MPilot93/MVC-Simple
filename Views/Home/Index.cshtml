@@ -6,6 +6,10 @@
 
 
     <h1 class="display-4">Lista degli impiegati</h1>
+
+   
+        <p class="text-right">@Html.ActionLink("Aggiungi nuovo impiegato","Aggiungi")</p>
+   
     <table class=" table">
         <tr>
             <th>
@@ -26,14 +30,14 @@
         foreach(var impiegato in Model)
         {
             <tr>
-                <td>@impiegato.Nome)</td>
-                <td>@impiegato.Cognome)</td>
-                <td>@impiegato.Salario)</td>
-                <td>@impiegato.Citta)</td>
+                <td>@impiegato.Nome</td>
+                <td>@impiegato.Cognome</td>
+                <td>@impiegato.Salario</td>
+                <td>@impiegato.Citta</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new{ ID=impiegato.ID}) |
-                    @Html.ActionLink("Details", "Details", new{ ID=impiegato.ID}) |
-                    @Html.ActionLink("Delete", "Delete", new{ ID=impiegato.ID})
+                    @Html.ActionLink("Modifica", "Modifica", new{ ID=impiegato.ID}) |
+                    @Html.ActionLink("Dettagli", "Dettagli", new{ ID=impiegato.ID}) |
+                    @Html.ActionLink("Cancella", "Cancella", new{ ID=impiegato.ID})
                 </td>
             </tr>
         }

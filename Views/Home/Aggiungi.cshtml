@@ -1,0 +1,58 @@
+﻿@model ImpiegatoViewModel;
+
+@{
+    ViewBag.Title = "Aggiungi Impiegato";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div roll="alert" class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div>Aggiungi Impiegato:</div>
+        <hr>
+        @Html.HiddenFor(model => model.ID) @* Per nascondere l'ID' *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new {@class = "label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome)
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cognome, htmlAttributes: new {@class = "label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cognome)
+            </div>
+        </div>
+         <hr>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Citta, htmlAttributes: new {@class = "label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Citta)
+            </div>
+        </div>
+         <hr>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Salario, htmlAttributes: new {@class = "label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Salario)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Aggiungi" class="btn btn-primary"/>
+            </div>
+        </div>
+
+    </div>
+}
+<div>
+    @Html.ActionLink("Indietro","Index")
+</div>

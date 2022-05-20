@@ -1,46 +1,60 @@
-﻿using CrudImpiegati.Models;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Data.SqlClient;
 
-namespace CrudImpiegati.Controllers
+using CrudImpiegati.Repository;
+using CrudImpiegati.Models;
+
+namespace CRUDImpiegati.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private DBManager dBManager;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            dBManager = new DBManager();
         }
 
+        [HttpGet]
         public IActionResult Index()
+
+        { 
+        var result = dBManager.GetAllImpiegati();
+            return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult Modifica(int id)
         {
-            //("data source=ACADEMYNETPD07\\SQLEXPRESS;" +"database = impiegati;" +"Integrated Security = true;" +"Connection timeout = 3600;")
-            string connectionString="Data Source=LAPTOP-6U512VIE\\SQLEXPRESS; Initial Catalog = Impiegati;Integrated Security = true;Connection timeout = 3600;";
+            var impiegato = dBManager.GetAllImpiegati().Where(x => x.ID == id).FirstOrDefault();
+            return View(impiegato);
+        }
 
-            //string connectionString = @"Server=LAPTOP-6U512VIE\SQLEXPRESS;Database=Impiegati;Trusted_Connection=True; Integrated Security = true;Connection timeout = 3600";
-            List<ImpiegatoViewModel> impiegatoList = new List<ImpiegatoViewModel>();
-            string sql = @"select * from impiegato";
-            using var connection = new SqlConnection(connectionString);
-            connection.Open();
-            using var command = new SqlCommand(sql, connection);
-            var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                var impiegato = new ImpiegatoViewModel
+        [HttpPost]
+        public IActionResult Modifica(ImpiegatoViewModel impiegato)
+        {
+            var res = dBManager.GetAllImpiegati().Where(x => x.ID == impiegato.ID).FirstOrDefault();
+            if (res != null)
+                dBManager.EditImpiegato(impiegato);
 
-                {
-                    ID = Convert.ToInt32(reader["ID"]),
-                    Nome = reader["Nome"].ToString(),
-                    Cognome = reader["Cognome"].ToString(),
-                    Salario = Convert.ToDecimal(reader["Salario"]),
-                    Citta = reader["Citta"].ToString()
-                };
-                impiegatoList.Add(impiegato);
-               
-            }
-            return View(impiegatoList);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Aggiungi()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Aggiungi(ImpiegatoViewModel impiegato)
+        {
+            dBManager.AggiungiImpiegato(impiegato);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
